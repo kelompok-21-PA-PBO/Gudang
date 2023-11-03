@@ -10,7 +10,7 @@ public class DatabaseConnection {
     protected ResultSet resultSet;
 
     private final static String dbHost = "localhost";
-    private final static String dbName = "ton";
+    private final static String dbName = "gudang";
     private final static String dbUser = "root";
     private final static String dbPass = "";
 
