@@ -22,7 +22,7 @@ Aplikasi Manajemen Penyimpanan Gudang adalah sebuah aplikasi sederhana yang saya
 Pada program saya terdapat 3 package yaitu Database, GUI dan Gudang.
 
 
-##### Database.java
+##### DatabaseConnection.java
       package Database;
 
       import java.sql.*;
@@ -450,6 +450,208 @@ createPakaian(): Metode ini digunakan untuk menambahkan data pakaian ke database
 Dalam metode createPakaian(), koneksi database dibuka, operasi SQL dijalankan, dan koneksi ditutup dalam blok try-catch-finally untuk menangani pengecualian. Setelah operasi SQL dijalankan, variabel isOperationSuccess akan menunjukkan apakah operasi tersebut berhasil atau tidak.
 
 Perlu diperhatikan bahwa kelas ini juga mewarisi variabel id_barang dari kelas BarangClass. Namun, jika id_barang dari PakaianClass digunakan, maka nilai id_barang dalam kelas ini akan menggantikan nilai id_barang dari kelas BarangClass.
+
+##### DataBarangClass.java
+
+            package Gudang;
+            
+            import Database.DatabaseConnection;
+            import java.sql.Connection;
+            import java.sql.PreparedStatement;
+            import java.sql.SQLException;
+            
+            
+            public class DataBarangClass extends DatabaseConnection{
+                public String jumlah_barang;
+                public String id_barang;
+                
+                public void setJumlahBarang(String jumlah_barang) {
+                    this.jumlah_barang = jumlah_barang;
+                }
+                
+                public void setIdBarang(String id_barang) {
+                    this.id_barang = id_barang;
+                }
+                
+                public boolean createDataBarang() {
+                        boolean isOperationSuccess = false;
+            
+                        Connection connection = null;
+                        PreparedStatement preparedStatement = null;
+            
+                        try {
+                            connection = this.getConnection();
+                            String sql = "INSERT INTO data_barang_masuk (jumlah_barang_masuk, barang_id_barang) VALUES (?, ?)";
+                            preparedStatement = connection.prepareStatement(sql);
+            
+                            preparedStatement.setString(1, this.jumlah_barang);
+                            preparedStatement.setString(2, this.id_barang);
+            
+                            int result = preparedStatement.executeUpdate();
+                            isOperationSuccess = result > 0;
+                        } catch (SQLException ex) {
+                            ex.printStackTrace();
+                        } finally {
+                  
+                            if (preparedStatement != null) {
+                                try {
+                                    preparedStatement.close();
+                                } catch (SQLException ex) {
+                                    ex.printStackTrace();
+                                }
+                            }
+                
+                            if (connection != null) {
+                                try {
+                                    connection.close();
+                                } catch (SQLException ex) {
+                                    ex.printStackTrace();
+                                }
+                            }
+                        }
+            
+                        return isOperationSuccess;
+                    }
+                
+            }
+
+kelas Java DataBarangClass yang digunakan untuk mengelola data terkait barang masuk dalam database. Berikut penjelasan singkatnya:
+
+Variabel Anggota: Kelas ini memiliki variabel anggota jumlah_barang dan id_barang untuk menyimpan informasi tentang jumlah barang masuk dan ID barang yang terkait.
+
+Setter: Terdapat metode-metode setter untuk mengatur nilai variabel anggota di atas.
+
+createDataBarang(): Metode ini digunakan untuk menambahkan data barang masuk ke dalam database. Ia menggunakan parameter yang telah diatur sebelumnya dan menjalankan operasi INSERT SQL untuk memasukkan data baru ke dalam tabel "data_barang_masuk." Hasil operasi (berhasil atau tidak) dikembalikan sebagai nilai boolean.
+
+Dalam metode createDataBarang(), koneksi database dibuka, operasi SQL dijalankan, dan koneksi ditutup dalam blok try-catch-finally untuk menangani pengecualian. Setelah operasi SQL dijalankan, variabel isOperationSuccess akan menunjukkan apakah operasi tersebut berhasil atau tidak.
+
+##### UserDao.java
+
+            package Gudang;
+            
+            import java.sql.*;
+            
+            
+            public class UserDao {
+                private Connection connection;
+            
+                public UserDao(Connection connection) {
+                    this.connection = connection;
+                }
+            
+            
+                public boolean registerUser(String id_karyawan, String username, String password) {
+                String insertUserSQL = "INSERT INTO karyawan (id_karyawan, username, password, karyawan_id_karyawan) VALUES (?, ?, ?, ?)";
+            
+                try (PreparedStatement preparedStatement = connection.prepareStatement(insertUserSQL)) {
+                    preparedStatement.setString(1, id_karyawan);
+                    preparedStatement.setString(2, username);
+                    preparedStatement.setString(3, password);
+                    preparedStatement.setString(4, id_karyawan); // Menyamakan karyawan_id_karyawan dengan id_karyawan
+            
+                    int rowsAffected = preparedStatement.executeUpdate();
+            
+                    return rowsAffected > 0;
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    return false;
+                }
+            }
+                
+            
+                public boolean loginUser(String username, String password) {
+                String loginSQL = "SELECT * FROM karyawan WHERE username = ? AND password = ?";
+                try (PreparedStatement preparedStatement = connection.prepareStatement(loginSQL)) {
+                    preparedStatement.setString(1, username);
+                    preparedStatement.setString(2, password);
+                    ResultSet resultSet = preparedStatement.executeQuery();
+            
+                    return resultSet.next();
+                    
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    return false;
+                }
+            }
+                
+                public boolean isUsernameExists(String id_karyawan, String username) {
+                String query = "SELECT COUNT(*) FROM karyawan WHERE id_karyawan = ? OR username = ?";
+                try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                    preparedStatement.setString(1, id_karyawan);
+                    preparedStatement.setString(2, username);
+                    ResultSet resultSet = preparedStatement.executeQuery();
+                    if (resultSet.next()) {
+                        int count = resultSet.getInt(1);
+                        return count > 0;
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                return false;
+            }
+                
+            
+                public String loginUserAndGetId(String username, String password) {
+                    String loginSQL = "SELECT * FROM karyawan WHERE username = ? AND password = ?";
+                    String id_karyawan = "";
+                    try (PreparedStatement preparedStatement = connection.prepareStatement(loginSQL)) {
+                        preparedStatement.setString(1, username);
+                        preparedStatement.setString(2, password);
+                        ResultSet resultSet = preparedStatement.executeQuery();
+            
+                        if (resultSet.next()) {
+                            id_karyawan = resultSet.getString("id_karyawan");
+                        }
+                        
+                        return id_karyawan;
+            
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+            
+                    return id_karyawan;
+                }
+            
+                private static class db {
+            
+                    private static Connection getConnection() {
+                        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+                    }
+            
+                    public db() {
+                    }
+                }
+            
+            }
+
+kelas Java UserDao yang bertanggung jawab untuk berinteraksi dengan tabel "karyawan" dalam database. Berikut penjelasan singkatnya:
+
+Konstruktor UserDao: Kelas ini memiliki sebuah konstruktor yang menerima objek Connection sebagai argumen. Konstruktor ini digunakan untuk menginisialisasi koneksi database yang akan digunakan oleh objek UserDao.
+
+Metode registerUser: Metode ini digunakan untuk mendaftarkan pengguna baru ke dalam database. Ia menerima tiga parameter, yaitu id_karyawan, username, dan password, dan melakukan operasi INSERT SQL untuk memasukkan data pengguna baru ke dalam tabel "karyawan." Hasil operasi (berhasil atau tidak) dikembalikan sebagai nilai boolean.
+
+Metode loginUser: Metode ini digunakan untuk memeriksa apakah pengguna dengan username dan password tertentu ada dalam database. Ia menjalankan operasi SELECT SQL dengan parameter username dan password yang diberikan. Jika pengguna ditemukan, metode ini mengembalikan true; jika tidak, mengembalikan false.
+
+Metode isUsernameExists: Metode ini digunakan untuk memeriksa apakah id_karyawan atau username tertentu sudah ada dalam database. Ia menjalankan operasi SELECT SQL untuk menghitung jumlah entri dengan id_karyawan atau username yang sesuai. Jika jumlahnya lebih dari 0, berarti ada yang sudah menggunakan id_karyawan atau username tersebut.
+
+Metode loginUserAndGetId: Metode ini mirip dengan loginUser, tetapi selain memeriksa apakah pengguna ada, ia juga mengembalikan id_karyawan dari pengguna yang berhasil masuk. Ini dapat berguna jika Anda perlu mengakses id_karyawan pengguna setelah login.
+
+Kelas ini digunakan untuk berbagai tugas otentikasi dan manajemen pengguna dalam aplikasi yang berinteraksi dengan database "karyawan."
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
