@@ -64,6 +64,7 @@ Pada program saya terdapat 3 package yaitu Database, GUI dan Gudang.
 
     }
 
+##### BarangClass.java
 
 
 
