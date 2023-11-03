@@ -89,20 +89,20 @@ public class DeleteMenu extends javax.swing.JFrame {
         if (id_barang <= 0) {
             JOptionPane.showMessageDialog(this, "ID Barang harus merupakan angka positif.");
         } else {
-            // Membuat objek BarangClass
+            
             BarangClass barang = new BarangClass();
 
-            // Mengatur id_barang yang akan dihapus
+           
             barang.setIdBarang(id_barang);
 
-            // Memanggil fungsi deleteBarang untuk menghapus barang
+           
             boolean isDeleted = barang.deleteBarang();
 
             if (isDeleted) {
-                // Barang berhasil dihapus
+                
                 JOptionPane.showMessageDialog(this, "Barang berhasil dihapus.");
             } else {
-                // Barang tidak dapat dihapus, tampilkan pesan kesalahan
+                
                 JOptionPane.showMessageDialog(this, "Gagal menghapus barang.");
             }
         }
