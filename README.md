@@ -260,10 +260,196 @@ deleteBarang(): Metode ini digunakan untuk menghapus data barang dari database b
 
 Selain itu, dalam setiap metode, koneksi database dibuka, operasi SQL dijalankan, dan koneksi ditutup dalam blok try-catch-finally untuk menangani pengecualian dan memastikan bahwa sumber daya koneksi dibersihkan dengan benar.
 
+##### ElektronikClass.java
+
+            package Gudang;
+            import java.sql.*;
+            
+            
+            public class ElektronikClass extends BarangClass{
+                public int id_barang;
+                public String model;
+                public String merk;
+                
+                
+                    public void setIdBarang(int id_barang) {
+                        this.id_barang = id_barang;
+                    }
+                    
+                    public void setModel(String model) {
+                        this.model = model;
+                    }
+                    
+                    public void setMerk(String merk) {
+                        this.merk = merk;
+                    }
+                
+                    public boolean createElektronik() {
+                    boolean isOperationSuccess = false;
+            
+                    try {
+                        Connection connection = this.getConnection();
+                        String sql = "INSERT INTO elektronik (id_barang, model, merk) VALUES (?, ?, ?)";
+                        PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            
+                        preparedStatement.setInt(1, this.id_barang);
+                        preparedStatement.setString(2, this.model);
+                        preparedStatement.setString(3, this.merk);
+            
+                        int result = preparedStatement.executeUpdate();
+                        isOperationSuccess = result > 0;
+                    } catch (SQLException ex) {
+                        ex.printStackTrace();
+                    } finally {
+                    }
+            
+                    return isOperationSuccess;
+                }
+                
+            }
+kelas Java ElektronikClass yang merupakan subkelas dari BarangClass. Kelas ini digunakan untuk mengelola data elektronik dan melakukan operasi tertentu terkait elektronik di dalam database. Berikut penjelasan singkatnya:
+
+Variabel Anggota: Kelas ini memiliki variabel anggota seperti id_barang, model, dan merk untuk menyimpan data terkait elektronik.
+
+Setter: Terdapat metode-metode setter untuk mengatur nilai variabel anggota di atas.
+
+createElektronik(): Metode ini digunakan untuk menambahkan data elektronik ke database. Ia menggunakan parameter yang telah diatur sebelumnya dan melakukan operasi INSERT SQL untuk memasukkan data baru ke tabel "elektronik." Hasil operasi (berhasil atau tidak) dikembalikan sebagai nilai boolean.
+
+Dalam metode createElektronik(), koneksi database dibuka, operasi SQL dijalankan, dan koneksi ditutup dalam blok try-catch-finally untuk menangani pengecualian. Setelah operasi SQL dijalankan, variabel isOperationSuccess akan menunjukkan apakah operasi tersebut berhasil atau tidak.
+
+Perlu diperhatikan bahwa kelas ini mewarisi variabel id_barang dari kelas BarangClass. Namun, jika id_barang dari ElektronikClass digunakan, maka nilai id_barang dalam kelas ini akan menggantikan nilai id_barang dari kelas BarangClass.
+
+##### MakananClass.java
+
+            package Gudang;
+            
+            
+            import java.sql.*;
+            
+            public class MakananClass extends BarangClass{
+                public int id_barang;
+                public String tanggal_kadaluarsa;
+                public String jenis_makanan;
+            
+                public void setId_barang(int id_barang) {
+                    this.id_barang = id_barang;
+                }
+            
+                public void setTanggal_kadaluarsa(String tanggal_kadaluarsa) {
+                    this.tanggal_kadaluarsa = tanggal_kadaluarsa;
+                }
+            
+                public void setJenis_makanan(String jenis_makanan) {
+                    this.jenis_makanan = jenis_makanan;
+                }
+                
+            
+                    public boolean createMakanan() {
+                    boolean isOperationSuccess = false;
+            
+                    try {
+                        Connection connection = this.getConnection();
+                        String sql = "INSERT INTO makanan (id_barang, tanggal_kadaluarsa, jenis_makanan) VALUES (?, ?, ?)";
+                        PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            
+                        preparedStatement.setInt(1, this.id_barang);
+                        preparedStatement.setString(2, this.tanggal_kadaluarsa);
+                        preparedStatement.setString(3, this.jenis_makanan);
+            
+                        int result = preparedStatement.executeUpdate();
+                        isOperationSuccess = result > 0;
+                    } catch (SQLException ex) {
+                        ex.printStackTrace();
+                    } finally {
+                    }
+            
+                    return isOperationSuccess;
+                }
+                
+                
+                
+            }
 
 
 
+kelas Java MakananClass yang juga merupakan subkelas dari BarangClass. Kelas ini digunakan untuk mengelola data makanan dan melakukan operasi tertentu terkait makanan di dalam database. Berikut penjelasan singkatnya:
 
+Variabel Anggota: Kelas ini memiliki variabel anggota seperti id_barang, tanggal_kadaluarsa, dan jenis_makanan untuk menyimpan data terkait makanan.
+
+Setter: Terdapat metode-metode setter untuk mengatur nilai variabel anggota di atas.
+
+createMakanan(): Metode ini digunakan untuk menambahkan data makanan ke database. Ia menggunakan parameter yang telah diatur sebelumnya dan melakukan operasi INSERT SQL untuk memasukkan data baru ke tabel "makanan." Hasil operasi (berhasil atau tidak) dikembalikan sebagai nilai boolean.
+
+Dalam metode createMakanan(), koneksi database dibuka, operasi SQL dijalankan, dan koneksi ditutup dalam blok try-catch-finally untuk menangani pengecualian. Setelah operasi SQL dijalankan, variabel isOperationSuccess akan menunjukkan apakah operasi tersebut berhasil atau tidak.
+
+Perlu diperhatikan bahwa kelas ini juga mewarisi variabel id_barang dari kelas BarangClass. Namun, jika id_barang dari MakananClass digunakan, maka nilai id_barang dalam kelas ini akan menggantikan nilai id_barang dari kelas BarangClass.
+
+
+##### PakaianClass.java
+
+            package Gudang;
+            
+            import java.sql.*;
+            
+            
+            public class PakaianClass extends BarangClass{
+                public int id_barang;
+                public String ukuran;
+                public String warna;
+                public String bahan;
+            
+                public void setId_barang(int id_barang) {
+                    this.id_barang = id_barang;
+                }
+            
+                public void setUkuran(String ukuran) {
+                    this.ukuran = ukuran;
+                }
+            
+                public void setWarna(String warna) {
+                    this.warna = warna;
+                }
+            
+                public void setBahan(String bahan) {
+                    this.bahan = bahan;
+                }
+                
+                    public boolean createPakaian() {
+                    boolean isOperationSuccess = false;
+            
+                    try {
+                        Connection connection = this.getConnection();
+                        String sql = "INSERT INTO pakaian (id_barang, ukuran, warna, bahan) VALUES (?, ?, ?, ?)";
+                        PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            
+                        preparedStatement.setInt(1, this.id_barang);
+                        preparedStatement.setString(2, this.ukuran);
+                        preparedStatement.setString(3, this.warna);
+                        preparedStatement.setString(4, this.bahan);
+            
+                        int result = preparedStatement.executeUpdate();
+                        isOperationSuccess = result > 0;
+                    } catch (SQLException ex) {
+                        ex.printStackTrace();
+                    } finally {
+                    }
+            
+                    return isOperationSuccess;
+                }
+                 
+            }
+
+kelas Java PakaianClass, yang juga merupakan subkelas dari BarangClass. Kelas ini digunakan untuk mengelola data pakaian dan melakukan operasi tertentu terkait pakaian di dalam database. Berikut penjelasan singkatnya:
+
+Variabel Anggota: Kelas ini memiliki variabel anggota seperti id_barang, ukuran, warna, dan bahan untuk menyimpan data terkait pakaian.
+
+Setter: Terdapat metode-metode setter untuk mengatur nilai variabel anggota di atas.
+
+createPakaian(): Metode ini digunakan untuk menambahkan data pakaian ke database. Ia menggunakan parameter yang telah diatur sebelumnya dan melakukan operasi INSERT SQL untuk memasukkan data baru ke tabel "pakaian." Hasil operasi (berhasil atau tidak) dikembalikan sebagai nilai boolean.
+
+Dalam metode createPakaian(), koneksi database dibuka, operasi SQL dijalankan, dan koneksi ditutup dalam blok try-catch-finally untuk menangani pengecualian. Setelah operasi SQL dijalankan, variabel isOperationSuccess akan menunjukkan apakah operasi tersebut berhasil atau tidak.
+
+Perlu diperhatikan bahwa kelas ini juga mewarisi variabel id_barang dari kelas BarangClass. Namun, jika id_barang dari PakaianClass digunakan, maka nilai id_barang dalam kelas ini akan menggantikan nilai id_barang dari kelas BarangClass.
 
 
 
