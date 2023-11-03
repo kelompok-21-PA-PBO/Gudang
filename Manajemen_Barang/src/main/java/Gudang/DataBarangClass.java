@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Gudang;
 
 import Database.DatabaseConnection;
@@ -9,10 +5,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-/**
- *
- * @author VNX
- */
+
 public class DataBarangClass extends DatabaseConnection{
     public String jumlah_barang;
     public String id_barang;
@@ -44,7 +37,7 @@ public class DataBarangClass extends DatabaseConnection{
             } catch (SQLException ex) {
                 ex.printStackTrace();
             } finally {
-                // Menutup preparedStatement terlebih dahulu
+      
                 if (preparedStatement != null) {
                     try {
                         preparedStatement.close();
@@ -52,7 +45,7 @@ public class DataBarangClass extends DatabaseConnection{
                         ex.printStackTrace();
                     }
                 }
-                // Kemudian tutup koneksi
+    
                 if (connection != null) {
                     try {
                         connection.close();
