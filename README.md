@@ -3976,8 +3976,22 @@ Terdapat juga metode-metode lain seperti jLabel1MouseDragged, jLabel1MousePresse
 Metode main() digunakan untuk menginisialisasi dan menampilkan jendela UpdateMenu saat aplikasi dijalankan.
 
 
+#### Output Manajemen Stok Data
 
+![loginmenu](https://github.com/kelompok-21-PA-PBO/Gudang/assets/116480927/8812e287-7874-48db-a58b-5869e6769caa)
 
+![signup](https://github.com/kelompok-21-PA-PBO/Gudang/assets/116480927/afa5c2b4-3fcd-4cda-ab51-6930bab34023)
 
+![menu utama](https://github.com/kelompok-21-PA-PBO/Gudang/assets/116480927/2729263a-4a9f-471d-bc1b-96c52742a1c5)
 
+![create](https://github.com/kelompok-21-PA-PBO/Gudang/assets/116480927/c1e2626c-5cb5-464c-983a-d1f672f3f2a9)
 
+![show](https://github.com/kelompok-21-PA-PBO/Gudang/assets/116480927/ec14b4d6-18dd-4ae6-9ed6-c3d60c5459ff)
+
+![update](https://github.com/kelompok-21-PA-PBO/Gudang/assets/116480927/ec9f9901-20a2-42a1-9d3a-904a41c88663)
+
+![delete](https://github.com/kelompok-21-PA-PBO/Gudang/assets/116480927/dc9c0688-0b2b-4d06-ae67-d6be08a55cdc)
+
+![isi create](https://github.com/kelompok-21-PA-PBO/Gudang/assets/116480927/dd0b051a-05d6-4003-9a5f-091c2329a9cd)
+
+![isi show](https://github.com/kelompok-21-PA-PBO/Gudang/assets/116480927/8fd0ff52-1a63-4cf1-bb78-98c627d4095f)
