@@ -1,7 +1,7 @@
 package Gudang;
 
 import java.sql.*;
-import Database.DatabaseConnection;
+
 
 public class UserDao {
     private Connection connection;
@@ -10,23 +10,7 @@ public class UserDao {
         this.connection = connection;
     }
 
-//    public boolean registerUser(String id_karyawan, String username, String password) {
-//        String insertUserSQL = "INSERT INTO karyawan (id_karyawan, username, password) VALUES (?, ?, ?)";
-//
-//        try (PreparedStatement preparedStatement = connection.prepareStatement(insertUserSQL)) {
-//            preparedStatement.setString(1, id_karyawan);
-//            preparedStatement.setString(2, username);
-//            preparedStatement.setString(3, password);
-//
-//            int rowsAffected = preparedStatement.executeUpdate();
-//
-//            return rowsAffected > 0;
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//            return false;
-//        }
-//    }
-    
+
     public boolean registerUser(String id_karyawan, String username, String password) {
     String insertUserSQL = "INSERT INTO karyawan (id_karyawan, username, password, karyawan_id_karyawan) VALUES (?, ?, ?, ?)";
 
@@ -45,11 +29,7 @@ public class UserDao {
     }
 }
     
-    
-    
-    
-    
-    
+
     public boolean loginUser(String username, String password) {
     String loginSQL = "SELECT * FROM karyawan WHERE username = ? AND password = ?";
     try (PreparedStatement preparedStatement = connection.prepareStatement(loginSQL)) {
@@ -81,11 +61,7 @@ public class UserDao {
     return false;
 }
     
-    
 
-    
-    
-// blm kepake
     public String loginUserAndGetId(String username, String password) {
         String loginSQL = "SELECT * FROM karyawan WHERE username = ? AND password = ?";
         String id_karyawan = "";
@@ -117,19 +93,4 @@ public class UserDao {
         }
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
 }
