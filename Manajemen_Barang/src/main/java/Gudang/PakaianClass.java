@@ -1,9 +1,7 @@
 package Gudang;
 
-import Database.DatabaseConnection;
 import java.sql.*;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
+
 
 public class PakaianClass extends BarangClass{
     public int id_barang;
@@ -27,11 +25,6 @@ public class PakaianClass extends BarangClass{
         this.bahan = bahan;
     }
     
-    
-    
-    
-    
-    
         public boolean createPakaian() {
         boolean isOperationSuccess = false;
 
@@ -54,15 +47,5 @@ public class PakaianClass extends BarangClass{
 
         return isOperationSuccess;
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+     
 }
