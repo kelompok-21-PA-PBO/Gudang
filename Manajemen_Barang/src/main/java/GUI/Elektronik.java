@@ -18,7 +18,7 @@ public class Elektronik extends javax.swing.JFrame {
        
         
 private boolean isIdDuplicate(int id, String tableName) {
-    DatabaseConnection db = null; // Deklarasikan variabel di luar blok try
+    DatabaseConnection db = null; 
     try {
         db = new DatabaseConnection();
         Connection connection = db.getConnection();
@@ -27,11 +27,11 @@ private boolean isIdDuplicate(int id, String tableName) {
         String query = "SELECT * FROM " + tableName + " WHERE id_barang = " + id;
         ResultSet resultSet = statement.executeQuery(query);
 
-        return resultSet.next(); // Mengembalikan true jika ID sudah ada, false jika belum ada
+        return resultSet.next(); 
 
     } catch (SQLException ex) {
         ex.printStackTrace();
-        // Handle exceptions
+        
     } finally {
         if (db != null) {
             db.disconnected();
@@ -153,19 +153,19 @@ private boolean isIdDuplicate(int id, String tableName) {
     }//GEN-LAST:event_txtJumlahBarangActionPerformed
 
     private void btncreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btncreateActionPerformed
-    // Baca nilai dari teks field untuk tabel barang
+    
     String idBarangText = txtIdBarang.getText().trim();
     String namaBarang = txtNamaBarang.getText().trim();
     String deskripsi = txtDeskripsi.getText().trim();
     String jumlahBarangText = txtJumlahBarang.getText().trim();
 
-        // Check if any of the fields is empty
+        
     if (idBarangText.isEmpty() || namaBarang.isEmpty() || deskripsi.isEmpty() || jumlahBarangText.isEmpty()) {
         JOptionPane.showMessageDialog(null, "Semua field harus diisi.");
         return;
     }
     
-        // Check if the ID contains only digits
+        
     if (!idBarangText.matches("\\d+")) {
         JOptionPane.showMessageDialog(null, "ID barang harus berupa angka.");
         return;
@@ -176,25 +176,25 @@ private boolean isIdDuplicate(int id, String tableName) {
     int jumlahBarang = Integer.parseInt(jumlahBarangText);
     
     
-        // Check if the ID is negative
+        
     if (idBarang < 1) {
         JOptionPane.showMessageDialog(null, "ID barang tidak boleh negatif.");
         return;
     }
     
-        // Check if the quantity is less than 1
+        
     if (jumlahBarang < 1) {
         JOptionPane.showMessageDialog(null, "Jumlah barang tidak boleh kurang dari 1.");
         return;
     }
     
-    // Check if the ID already exists in the "barang" table
+    
     if (isIdDuplicate(idBarang, "barang")) {
         JOptionPane.showMessageDialog(null, "ID barang sudah digunakan. Tolong gunakan ID lain.");
         return;
     }
 
-    // Buat objek BarangClass dan isi atributnya
+    
     BarangClass barang = new BarangClass();
     barang.setIdBarang(idBarang);
     barang.setNamaBarang(namaBarang);
