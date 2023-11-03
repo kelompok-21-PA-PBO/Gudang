@@ -63,6 +63,23 @@ Pada program saya terdapat 3 package yaitu Database, GUI dan Gudang.
     }
 
     }
+Import Statement: Kode mengimpor pustaka yang diperlukan dari paket java.sql untuk mengakses dan mengelola database.
+
+Deklarasi Variabel: Kode ini mendefinisikan berbagai variabel yang akan digunakan dalam kelas, termasuk connection, statement, preparedStatement, dan resultSet. Variabel connection adalah koneksi ke database.
+
+Informasi Koneksi Database: Informasi yang diperlukan untuk menghubungkan ke database MySQL disimpan dalam variabel statis seperti dbHost (alamat host database), dbName (nama database), dbUser (nama pengguna database), dan dbPass (kata sandi database).
+
+Konstruktor DatabaseConnection: Ini adalah konstruktor kelas yang akan dijalankan saat objek DatabaseConnection dibuat. Di dalamnya, koneksi ke database MySQL dibuat dengan menggunakan informasi yang telah ditentukan sebelumnya. Jika koneksi berhasil, pesan "Database Connected!" akan dicetak ke konsol.
+
+Metode getConnection(): Metode ini digunakan untuk mengambil objek koneksi ke database. Koneksi ini dapat digunakan untuk menjalankan perintah SQL.
+
+Metode disconnected(): Metode ini digunakan untuk menutup koneksi ke database. Jika penutupan berhasil, pesan "Database Closed" dicetak ke konsol. Jika terjadi kesalahan saat menutup koneksi, pesan "Database Failed to Close" dicetak.
+
+Kelas DatabaseConnection ini dirancang untuk memudahkan koneksi dan pemutusan koneksi ke database MySQL dengan parameter koneksi yang telah ditentukan sebelumnya.
+
+
+
+
 
 ##### BarangClass.java
       package Gudang;
@@ -228,6 +245,21 @@ Pada program saya terdapat 3 package yaitu Database, GUI dan Gudang.
             }
             
             }
+
+Meng-extend Kelas DatabaseConnection: Kelas BarangClass merupakan subkelas dari DatabaseConnection, yang berarti ia dapat menggunakan koneksi database yang telah diatur dalam kelas induknya.
+
+Variabel Anggota: Kelas ini memiliki beberapa variabel anggota untuk menyimpan data barang, seperti id_barang, nama_barang, deskripsi, jumlah_barang, dan karyawan_id.
+
+Setter: Terdapat metode-metode setter untuk mengatur nilai-nilai variabel anggota di atas.
+
+createBarang(): Metode ini digunakan untuk menambahkan data barang ke database. Ia menggunakan parameter yang telah diatur sebelumnya dan melakukan operasi INSERT SQL untuk memasukkan data baru ke tabel barang. Hasil operasi (berhasil atau tidak) dikembalikan sebagai nilai boolean.
+
+updateBarang(): Metode ini digunakan untuk memperbarui data barang dalam database. Ia mengambil parameter yang telah diatur dan menjalankan operasi UPDATE SQL untuk mengubah deskripsi dan jumlah barang berdasarkan ID barang tertentu. Hasil operasi (berhasil atau tidak) dikembalikan sebagai nilai boolean.
+
+deleteBarang(): Metode ini digunakan untuk menghapus data barang dari database berdasarkan ID barang tertentu. Ia melakukan operasi DELETE SQL untuk menghapus data sesuai ID barang yang ditentukan. Hasil operasi (berhasil atau tidak) dikembalikan sebagai nilai boolean.
+
+Selain itu, dalam setiap metode, koneksi database dibuka, operasi SQL dijalankan, dan koneksi ditutup dalam blok try-catch-finally untuk menangani pengecualian dan memastikan bahwa sumber daya koneksi dibersihkan dengan benar.
+
 
 
 
